@@ -1,0 +1,110 @@
+MediBot
+
+Medical Symptom Diagnosis Expert System
+
+Submitted By: Anubhav Kushwaha
+
+Registration Number: 25MIM10001
+
+Programme: BTech. Computer Science Engineering (Core)
+
+School: SCOPE
+
+Course: Artificial Intelligence & Machine Learning
+
+Technology Stack: SWI-Prolog 9.x, Logic Programming, Horn Clauses
+
+Platform: VITyarthi
+
+1. Introduction
+
+MediBot is a console-based Expert System built entirely in SWI-Prolog that diagnoses nine common medical conditions based on user-reported symptoms and generates a structured, prioritised treatment action plan.
+
+The system is inspired by MYCIN (Stanford, 1972), one of the first AI programs to diagnose bacterial infections and the foundational work in medical expert systems.
+
+The primary goal of this project was to gain practical experience with core Artificial Intelligence concepts specifically Knowledge Representation, Rule-Based Inference, and Expert System Architecture using Prolog as the implementation language.
+
+Prolog's logical programming paradigm makes it a natural fit for encoding human expert knowledge as IF-THEN rules and querying that knowledge base through backtracking search.
+
+MediBot operates through a yes/no symptom questionnaire covering 14 symptoms. Confirmed symptoms are stored as dynamic Prolog facts, which the inference engine then matches against a knowledge base of Horn clause rules to identify the most probable condition. A separate treatment knowledge base then delivers the recommended action plan.
+
+2. Problem Statement
+
+Access to qualified medical professionals is uneven across India, particularly in rural and semi-urban areas. Many people rely on unreliable internet searches or word-of-mouth to interpret their symptoms, leading to delayed treatment or dangerous self-medication.
+
+There is a practical need for a lightweight, intelligent system that can:
+
+• Guide users through a structured symptom assessment without requiring internet connectivity.
+
+• Map reported symptoms to probable conditions using validated clinical logic.
+
+• Recommend a safe, prioritised action plan including flagging when a condition is an emergency.
+
+• Store expert medical knowledge in a form that is transparent, auditable, and extendable.
+
+MediBot addresses these challenges by encoding a doctor's diagnostic reasoning directly as Prolog rules, making the system's logic readable, modifiable, and completely open, unlike black-box machine learning models.
+
+3. Functional Requirements
+
+4. Symptom Collection: Prompt the user with 14 yes/no questions covering common symptoms and store confirmed answers as dynamic facts.
+
+5. Diagnosis Inference: Match the collected symptoms against a rule base of 9 conditions using Horn clause logic and Negation as Failure (NAF).
+
+6. Treatment Recommendation: For each diagnosed condition, output a numbered, tiered action plan categorised by urgency.
+
+7. Graceful Fallback: If no rule matches the given symptom set, inform the user that no specific diagnosis could be made and advise consulting a doctor.
+
+8. Modular Knowledge Base: Keep diagnostic rules and treatment plans in separate .pl files so either can be extended without modifying the inference engine.
+
+9. Session Cleanup: Retract all dynamic symptom facts between sessions to prevent cross-contamination of results.
+
+10. Non-Functional Requirements
+
+11. Performance: The system responds instantly to user input. Prolog's in-memory fact matching is O(n) over the small rule set and imperceptibly fast.
+
+12. Usability: The CLI interface uses plain English prompts (yes./no.) and clearly labelled output sections, making it accessible to non-technical users.
+
+13. Maintainability: The three-file architecture separates concerns cleanly. A new disease can be added by writing one diagnose/1 rule and one treat/1 clause without touching any other file.
+
+14. Portability: SWI-Prolog is freely available on Linux, Windows, and macOS. The project has no dependencies beyond a standard Prolog installation.
+
+15. Transparency: Because the knowledge base is written in readable Horn clauses, every diagnostic decision the system makes can be traced and verified by a human expert.
+
+16. Safety: All treatment plans include a disclaimer that the system is for educational purposes only and does not replace professional medical advice.
+
+17. System Architecture
+
+MediBot follows a three-layer expert system architecture, which cleanly separates the user interface, reasoning engine, and knowledge storage.
+
+Presentation Layer:
+Component: Command-Line Interface (CLI)
+Key Predicate: start_diagnosis/0
+File: main.pl
+
+Business Logic Layer:
+Component: Inference Engine + Input Handler
+Key Predicates: ask/1, diagnose/1
+Files: main.pl + kb_symptoms.pl
+
+Knowledge Base Layer:
+Component: Symptom Rules
+Key Predicates: diagnose/1, symptom_list/1
+File: kb_symptoms.pl
+
+The application operates on an in-memory working memory model during runtime.
+
+User-confirmed symptoms are stored using assertz/1 as dynamic Prolog facts, consumed by the inference engine, and then retracted at session end.
+
+There is no persistent database. Knowledge is entirely encoded in the .pl source files.
+
+6. Design Diagrams
+
+Use Case Diagram
+
+Actor: User (Patient)
+
+Use Cases:
+
+• Answer Symptom Questions (14 yes/no prompts)
+
+• Receive Diagn
